@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  LayoutDashboard, Users, GraduationCap, UserCheck, ClipboardList,
+  LayoutDashboard, Users, UserCheck, ClipboardList,
   Calendar, Receipt, FileText, Bus, MessageSquare, FolderOpen,
   BarChart3, Settings, ChevronDown, ChevronRight, BookOpen,
   UserPlus, Building2, ShieldCheck, Wallet, HelpCircle, Package,
@@ -9,6 +9,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRole } from "@/contexts/RoleContext";
+import aqlixLogo from "@/assets/aqlix_logo-removebg-preview.png";
+import deeCampusLogo from "@/assets/dee-campus-logo.png";
 
 interface NavItem {
   label: string;
@@ -108,19 +110,17 @@ export function AppSidebar({ collapsed, onToggle }: AppSidebarProps) {
       {/* Brand */}
       <div className="h-16 flex items-center px-4 border-b border-sidebar-border flex-shrink-0">
         {!collapsed ? (
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
-              <GraduationCap className="h-5 w-5 text-accent-foreground" />
-            </div>
-            <div>
-              <h1 className="text-sm font-bold text-primary-foreground tracking-tight">DeeCampus</h1>
-              <p className="text-[10px] text-sidebar-muted uppercase tracking-widest">ERP</p>
-            </div>
-          </div>
+          <img
+            src={deeCampusLogo}
+            alt="DeeCampus"
+            className="h-10 max-w-[180px] object-contain"
+          />
         ) : (
-          <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center mx-auto">
-            <GraduationCap className="h-5 w-5 text-accent-foreground" />
-          </div>
+          <img
+            src={deeCampusLogo}
+            alt="DeeCampus"
+            className="mx-auto h-8 w-8 object-contain"
+          />
         )}
       </div>
 
@@ -140,7 +140,7 @@ export function AppSidebar({ collapsed, onToggle }: AppSidebarProps) {
                 }}
                 className={cn(
                   "w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm transition-colors",
-                  active ? "bg-sidebar-accent text-sidebar-accent-foreground" : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground",
+                  active ? "bg-sidebar-accent text-sidebar-primary" : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-primary",
                   collapsed && "justify-center px-0"
                 )}
                 title={collapsed ? item.label : undefined}
@@ -164,7 +164,7 @@ export function AppSidebar({ collapsed, onToggle }: AppSidebarProps) {
                         "w-full text-left text-xs py-1.5 px-2 rounded transition-colors",
                         location.pathname === child.path
                           ? "text-sidebar-primary font-medium bg-sidebar-accent/50"
-                          : "text-sidebar-muted hover:text-sidebar-foreground"
+                          : "text-sidebar-muted hover:text-sidebar-primary"
                       )}
                     >
                       {child.label}
@@ -180,9 +180,16 @@ export function AppSidebar({ collapsed, onToggle }: AppSidebarProps) {
       {/* Footer */}
       {!collapsed && (
         <div className="p-3 border-t border-sidebar-border">
-          <div className="bg-sidebar-accent/50 rounded-lg p-3 text-center">
-            <p className="text-[10px] text-sidebar-muted uppercase tracking-widest">Academic Year</p>
-            <p className="text-sm font-semibold text-sidebar-foreground">2025–2026</p>
+          <div className="bg-sidebar-accent/50 rounded-lg p-3 flex items-center gap-3">
+            <img
+              src={aqlixLogo}
+              alt="Aqlix"
+              className="h-9 w-12 flex-shrink-0 object-contain"
+            />
+            <div className="min-w-0">
+              <p className="text-[10px] text-sidebar-muted uppercase tracking-widest">Academic Year</p>
+              <p className="text-sm font-semibold text-sidebar-foreground">2025–2026</p>
+            </div>
           </div>
         </div>
       )}

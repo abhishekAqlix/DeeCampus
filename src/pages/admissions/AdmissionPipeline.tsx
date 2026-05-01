@@ -45,9 +45,9 @@ const initialStages: Stage[] = [
   },
   {
     name: "Pending",
-    headerColor: "border-t-orange-400",
-    columnBg: "bg-orange-50/50",
-    badgeVariant: "bg-orange-100 text-orange-700",
+    headerColor: "border-t-[#4992E0]",
+    columnBg: "bg-[#4992E0]/10",
+    badgeVariant: "bg-[#4992E0]/15 text-[#4992E0]",
     items: [
       { id: "6", name: "Anika Sharma", class: "Class 1", date: "22 Mar 2026", source: "Newspaper" },
       { id: "7", name: "Vivek Kumar", class: "Class 9", date: "20 Mar 2026", source: "Referral" },

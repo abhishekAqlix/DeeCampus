@@ -38,7 +38,7 @@ export function AppHeader({ onToggleSidebar }: AppHeaderProps) {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="gap-2 h-9 pl-2 pr-3">
+            <Button variant="ghost" size="sm" className="gap-2 h-9 pl-2 pr-3 hover:bg-secondary/60 hover:text-foreground data-[state=open]:bg-secondary/60">
               <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center">
                 <span className="text-xs font-semibold text-primary-foreground">{user.initials}</span>
               </div>

@@ -10,7 +10,7 @@ const subjectColors: Record<string, string> = {
   Math: "bg-blue-50 border-blue-200 text-blue-700", English: "bg-green-50 border-green-200 text-green-700",
   Science: "bg-purple-50 border-purple-200 text-purple-700", Hindi: "bg-amber-50 border-amber-200 text-amber-700",
   SST: "bg-rose-50 border-rose-200 text-rose-700", CS: "bg-cyan-50 border-cyan-200 text-cyan-700",
-  PE: "bg-orange-50 border-orange-200 text-orange-700", Art: "bg-pink-50 border-pink-200 text-pink-700",
+  PE: "bg-[#4992E0]/10 border-[#4992E0]/30 text-[#4992E0]", Art: "bg-pink-50 border-pink-200 text-pink-700",
   Break: "bg-muted text-muted-foreground", Lunch: "bg-muted text-muted-foreground",
 };
 

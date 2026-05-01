@@ -22,7 +22,7 @@ const collectionData = [
 
 const enquiryData = [
   { name: "New", value: 24, color: "hsl(210, 90%, 56%)" },
-  { name: "Follow-up", value: 18, color: "hsl(30, 100%, 55%)" },
+  { name: "Follow-up", value: 18, color: "hsl(var(--accent))" },
   { name: "Converted", value: 45, color: "hsl(152, 60%, 42%)" },
   { name: "Dropped", value: 8, color: "hsl(0, 84%, 60%)" },
 ];
@@ -159,7 +159,7 @@ export default function Dashboard() {
       {role === "admin" && (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <KPICard title="Total Students" value="1,247" change="5.2%" changeType="up" icon={GraduationCap} variant="navy" />
+            <KPICard title="Total Students" value="1,247" change="5.2%" changeType="up" icon={GraduationCap} variant="brandGreen" />
             <KPICard title="Total Staff" value="86" change="2 new" changeType="up" icon={Users} variant="default" />
             <KPICard title="Today's Attendance" value="94.2%" change="1.3%" changeType="up" icon={UserCheck} variant="success" />
             <KPICard title="Fee Collection Today" value="₹1,45,200" change="12.5%" changeType="up" icon={Receipt} variant="orange" />
@@ -209,7 +209,7 @@ export default function Dashboard() {
                   <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12 }} />
                   <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12 }} tickFormatter={v => `₹${(v/100000).toFixed(1)}L`} />
                   <Tooltip formatter={(v: number) => [`₹${v.toLocaleString()}`, "Collection"]} />
-                  <Line type="monotone" dataKey="amount" stroke="hsl(30, 100%, 55%)" strokeWidth={2.5} dot={{ fill: "hsl(30, 100%, 55%)", r: 4 }} />
+                  <Line type="monotone" dataKey="amount" stroke="hsl(var(--accent))" strokeWidth={2.5} dot={{ fill: "hsl(var(--accent))", r: 4 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
