@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 const roleConfig: Record<UserRole, { label: string; icon: any; color: string }> = {
   admin: { label: "Admin", icon: Shield, color: "bg-accent text-accent-foreground" },
   staff: { label: "Staff", icon: Users, color: "bg-info text-info-foreground" },
-  student: { label: "Student", icon: GraduationCap, color: "bg-success text-success-foreground" },
+  // student: { label: "Student", icon: GraduationCap, color: "bg-success text-success-foreground" },
 };
 
 export function RoleSwitcher() {

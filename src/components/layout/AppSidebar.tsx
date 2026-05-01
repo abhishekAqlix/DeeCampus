@@ -30,12 +30,6 @@ const navigation: NavItem[] = [
     { label: "Academic Calendar", path: "/academics/calendar" },
     { label: "Timetable", path: "/timetable" },
   ]},
-  { label: "Students", icon: GraduationCap, children: [
-    { label: "All Students", path: "/students" },
-    { label: "Promotion", path: "/students/promotion" },
-    { label: "Documents", path: "/students/documents" },
-    { label: "Certificates", path: "/students/certificates" },
-  ]},
   { label: "Staff", icon: Users, children: [
     { label: "All Staff", path: "/staff" },
     { label: "Attendance", path: "/staff/attendance" },
