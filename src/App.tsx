@@ -4,6 +4,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { RequireAuth } from "@/components/auth/RequireAuth";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { RoleProvider } from "@/contexts/RoleContext";
 
 import Login from "@/pages/auth/Login";
@@ -65,86 +67,78 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
+    <AuthProvider>
       <RoleProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route element={<AppLayout />}>
-              <Route path="/" element={<Dashboard />} />
-              {/* Admissions */}
-              <Route path="/admissions/enquiries" element={<EnquiryList />} />
-              <Route path="/admissions/enquiries/new" element={<NewEnquiry />} />
-              <Route path="/admissions/enquiries/:id" element={<EnquiryDetail />} />
-              <Route path="/admissions/pipeline" element={<AdmissionPipeline />} />
-              {/* Students */}
-              <Route path="/students" element={<StudentList />} />
-              <Route path="/students/new" element={<StudentForm mode="create" />} />
-              <Route path="/students/:id" element={<StudentDetail />} />
-              <Route path="/students/:id/edit" element={<StudentForm mode="edit" />} />
-              <Route path="/students/promotion" element={<StudentPromotion />} />
-              <Route path="/students/documents" element={<StudentDocuments />} />
-              <Route path="/students/certificates" element={<Certificates />} />
-              {/* Staff */}
-              <Route path="/staff" element={<StaffList />} />
-              <Route path="/staff/new" element={<StaffForm mode="create" />} />
-              <Route path="/staff/:id" element={<StaffDetail />} />
-              <Route path="/staff/:id/edit" element={<StaffForm mode="edit" />} />
-              <Route path="/staff/attendance" element={<StaffAttendance />} />
-              <Route path="/staff/leaves" element={<LeaveManagement />} />
-              <Route path="/staff/payroll" element={<Payroll />} />
-              {/* Academics */}
-              <Route path="/academics/classes" element={<ClassesSections />} />
-              <Route path="/academics/subjects" element={<Subjects />} />
-              <Route path="/academics/calendar" element={<AcademicCalendar />} />
-              {/* Attendance */}
-              <Route path="/attendance" element={<AttendancePage />} />
-              {/* Timetable */}
-              <Route path="/timetable" element={<TimetablePage />} />
-              {/* Fees */}
-              <Route path="/fees/structure" element={<FeeStructure />} />
-              <Route path="/fees/collect" element={<FeeCollection />} />
-              <Route path="/fees/:id" element={<FeeLedger />} />
-              <Route path="/fees/pending" element={<PendingDues />} />
-              <Route path="/fees/reports" element={<FeeReports />} />
-              <Route path="/fees/expenses" element={<ExpenseManagement />} />
-              <Route path="/fees/cashbook" element={<Cashbook />} />
-              {/* Exams */}
-              <Route path="/exams/schedule" element={<ExamSchedule />} />
-              <Route path="/exams/marks" element={<MarksEntry />} />
-              <Route path="/exams/results" element={<Results />} />
-              <Route path="/exams/report-cards" element={<ReportCards />} />
-              <Route path="/exams/question-bank" element={<QuestionBank />} />
-              {/* Transport */}
-              <Route path="/transport/routes" element={<TransportRoutes />} />
-              <Route path="/transport/vehicles" element={<Vehicles />} />
-              <Route path="/transport/students" element={<TransportStudents />} />
-              <Route path="/transport/tracking" element={<LiveTracking />} />
-              {/* Communication */}
-              <Route path="/communication/messages" element={<MessagesPage />} />
-              <Route path="/communication/announcements" element={<Announcements />} />
-              <Route path="/communication/templates" element={<Templates />} />
-              {/* Other modules */}
-              <Route path="/library" element={<LibraryPage />} />
-              <Route path="/inventory" element={<InventoryPage />} />
-              <Route path="/visitors" element={<VisitorsPage />} />
-              <Route path="/helpdesk" element={<HelpdeskPage />} />
-              <Route path="/documents" element={<DocumentsPage />} />
-              <Route path="/reports" element={<ReportsCenter />} />
-              <Route path="/user-rights" element={<UserRights />} />
-              {/* Settings */}
-              <Route path="/settings/school" element={<SchoolProfile />} />
-              <Route path="/settings/masters" element={<MasterSetup />} />
-              <Route path="/settings/integrations" element={<IntegrationsPage />} />
-              <Route path="/settings/audit" element={<AuditLogs />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route element={<RequireAuth />}>
+                <Route element={<AppLayout />}>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/admissions/enquiries" element={<EnquiryList />} />
+                  <Route path="/admissions/enquiries/new" element={<NewEnquiry />} />
+                  <Route path="/admissions/enquiries/:id" element={<EnquiryDetail />} />
+                  <Route path="/admissions/pipeline" element={<AdmissionPipeline />} />
+                  <Route path="/students" element={<StudentList />} />
+                  <Route path="/students/new" element={<StudentForm mode="create" />} />
+                  <Route path="/students/:id" element={<StudentDetail />} />
+                  <Route path="/students/:id/edit" element={<StudentForm mode="edit" />} />
+                  <Route path="/students/promotion" element={<StudentPromotion />} />
+                  <Route path="/students/documents" element={<StudentDocuments />} />
+                  <Route path="/students/certificates" element={<Certificates />} />
+                  <Route path="/staff" element={<StaffList />} />
+                  <Route path="/staff/new" element={<StaffForm mode="create" />} />
+                  <Route path="/staff/:id" element={<StaffDetail />} />
+                  <Route path="/staff/:id/edit" element={<StaffForm mode="edit" />} />
+                  <Route path="/staff/attendance" element={<StaffAttendance />} />
+                  <Route path="/staff/leaves" element={<LeaveManagement />} />
+                  <Route path="/staff/payroll" element={<Payroll />} />
+                  <Route path="/academics/classes" element={<ClassesSections />} />
+                  <Route path="/academics/subjects" element={<Subjects />} />
+                  <Route path="/academics/calendar" element={<AcademicCalendar />} />
+                  <Route path="/attendance" element={<AttendancePage />} />
+                  <Route path="/timetable" element={<TimetablePage />} />
+                  <Route path="/fees/structure" element={<FeeStructure />} />
+                  <Route path="/fees/collect" element={<FeeCollection />} />
+                  <Route path="/fees/:id" element={<FeeLedger />} />
+                  <Route path="/fees/pending" element={<PendingDues />} />
+                  <Route path="/fees/reports" element={<FeeReports />} />
+                  <Route path="/fees/expenses" element={<ExpenseManagement />} />
+                  <Route path="/fees/cashbook" element={<Cashbook />} />
+                  <Route path="/exams/schedule" element={<ExamSchedule />} />
+                  <Route path="/exams/marks" element={<MarksEntry />} />
+                  <Route path="/exams/results" element={<Results />} />
+                  <Route path="/exams/report-cards" element={<ReportCards />} />
+                  <Route path="/exams/question-bank" element={<QuestionBank />} />
+                  <Route path="/transport/routes" element={<TransportRoutes />} />
+                  <Route path="/transport/vehicles" element={<Vehicles />} />
+                  <Route path="/transport/students" element={<TransportStudents />} />
+                  <Route path="/transport/tracking" element={<LiveTracking />} />
+                  <Route path="/communication/messages" element={<MessagesPage />} />
+                  <Route path="/communication/announcements" element={<Announcements />} />
+                  <Route path="/communication/templates" element={<Templates />} />
+                  <Route path="/library" element={<LibraryPage />} />
+                  <Route path="/inventory" element={<InventoryPage />} />
+                  <Route path="/visitors" element={<VisitorsPage />} />
+                  <Route path="/helpdesk" element={<HelpdeskPage />} />
+                  <Route path="/documents" element={<DocumentsPage />} />
+                  <Route path="/reports" element={<ReportsCenter />} />
+                  <Route path="/user-rights" element={<UserRights />} />
+                  <Route path="/settings/school" element={<SchoolProfile />} />
+                  <Route path="/settings/masters" element={<MasterSetup />} />
+                  <Route path="/settings/integrations" element={<IntegrationsPage />} />
+                  <Route path="/settings/audit" element={<AuditLogs />} />
+                </Route>
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
       </RoleProvider>
-    </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

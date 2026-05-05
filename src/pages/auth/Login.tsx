@@ -1,17 +1,56 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { GraduationCap, Eye, EyeOff } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { ApiError } from "@/lib/api/client";
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login, user, loading } = useAuth();
+
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const from = (location.state as { from?: string } | null)?.from ?? "/";
+
+  useEffect(() => {
+    if (!loading && user) {
+      navigate(from, { replace: true });
+    }
+  }, [loading, user, from, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setSubmitting(true);
+    try {
+      await login(email.trim(), password);
+      navigate(from, { replace: true });
+    } catch (err) {
+      const message = err instanceof ApiError ? err.message : "Unable to sign in";
+      setError(message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background text-muted-foreground text-sm">
+        Checking session…
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex">
-      {/* Left panel */}
       <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-12 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-navy-dark to-navy opacity-90" />
         <div className="relative z-10 text-center max-w-md">
@@ -33,7 +72,6 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Right panel */}
       <div className="flex-1 flex items-center justify-center p-8 bg-background">
         <div className="w-full max-w-sm space-y-6">
           <div className="lg:hidden flex items-center gap-2.5 mb-4">
@@ -51,32 +89,55 @@ export default function Login() {
             <p className="text-sm text-muted-foreground mt-1">Sign in to your account to continue</p>
           </div>
 
-          <div className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {error && (
+              <p className="text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded-md px-3 py-2">{error}</p>
+            )}
             <div className="space-y-2">
               <Label htmlFor="email" className="text-xs font-medium">Email Address</Label>
-              <Input id="email" type="email" placeholder="admin@school.com" className="h-10" />
+              <Input
+                id="email"
+                type="email"
+                autoComplete="email"
+                placeholder="admin@school.com"
+                className="h-10"
+                value={email}
+                onChange={(evt) => setEmail(evt.target.value)}
+                required
+              />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password" className="text-xs font-medium">Password</Label>
-                <button className="text-xs text-accent hover:text-orange-dark transition-colors">Forgot password?</button>
               </div>
               <div className="relative">
-                <Input id="password" type={showPassword ? "text" : "password"} placeholder="••••••••" className="h-10 pr-10" />
-                <button onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  placeholder="••••••••"
+                  className="h-10 pr-10"
+                  value={password}
+                  onChange={(evt) => setPassword(evt.target.value)}
+                  required
+                  minLength={8}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
             </div>
 
-            <Button className="w-full h-10 bg-accent text-accent-foreground hover:bg-orange-dark font-medium" onClick={() => navigate("/")}>
-              Sign In
+            <Button type="submit" className="w-full h-10 bg-accent text-accent-foreground hover:bg-orange-dark font-medium" disabled={submitting}>
+              {submitting ? "Signing in…" : "Sign In"}
             </Button>
-          </div>
+          </form>
 
-          <p className="text-center text-xs text-muted-foreground">
-            © 2025 DeeCampus ERP. All rights reserved.
-          </p>
+          <p className="text-center text-xs text-muted-foreground">© 2026 DeeCampus ERP. All rights reserved.</p>
         </div>
       </div>
     </div>

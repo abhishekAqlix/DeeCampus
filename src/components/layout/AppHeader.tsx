@@ -3,15 +3,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { QuickActions } from "@/components/erp/QuickActions";
-import { RoleSwitcher } from "@/components/erp/RoleSwitcher";
+import { useAuth } from "@/contexts/AuthContext";
 import { useRole } from "@/contexts/RoleContext";
+import { useNavigate } from "react-router-dom";
 
 interface AppHeaderProps {
   onToggleSidebar: () => void;
 }
 
 export function AppHeader({ onToggleSidebar }: AppHeaderProps) {
-  const { user, role, permissions } = useRole();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+  const { user, permissions } = useRole();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login", { replace: true });
+  };
 
   return (
     <header className="h-14 bg-card border-b flex items-center justify-between px-4 flex-shrink-0">
@@ -26,9 +34,6 @@ export function AppHeader({ onToggleSidebar }: AppHeaderProps) {
       </div>
 
       <div className="flex items-center gap-2">
-        {/* Role Switcher Preview */}
-        <RoleSwitcher />
-
         {permissions.canCreate && <QuickActions />}
 
         <Button variant="ghost" size="sm" className="h-9 w-9 p-0 relative">
@@ -53,7 +58,9 @@ export function AppHeader({ onToggleSidebar }: AppHeaderProps) {
             <DropdownMenuItem className="gap-2"><User className="h-4 w-4" />My Profile</DropdownMenuItem>
             <DropdownMenuItem className="gap-2"><Settings className="h-4 w-4" />Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 text-destructive"><LogOut className="h-4 w-4" />Logout</DropdownMenuItem>
+            <DropdownMenuItem className="gap-2 text-destructive" onClick={() => void handleLogout()}>
+              <LogOut className="h-4 w-4" />Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

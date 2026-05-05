@@ -26,6 +26,12 @@ const navigation: NavItem[] = [
     { label: "New Admission", path: "/students/new" },
     { label: "Pipeline", path: "/admissions/pipeline" },
   ]},
+  { label: "Students", icon: ClipboardList, children: [
+    { label: "All Students", path: "/students" },
+    { label: "Promotion", path: "/students/promotion" },
+    { label: "Documents", path: "/students/documents" },
+    { label: "Certificates", path: "/students/certificates" },
+  ]},
   { label: "Academics", icon: BookOpen, children: [
     { label: "Class & Sections", path: "/academics/classes" },
     { label: "Subjects", path: "/academics/subjects" },
